@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculateur IMC - Homme & Femme</title>
+    <meta name="description" content="Calculez votre IMC et découvrez si votre poids est adapté à votre taille.">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+
+<body class="bg-light">
+
+    <div class="container mt-5">
+        <div class="card shadow-lg p-4">
+            <h1 class="text-center">Calculateur IMC</h1>
+
+            <div class="mb-3">
+                <label class="form-label">Sexe :</label>
+                <select id="sexe" class="form-select">
+                    <option value="homme">Homme</option>
+                    <option value="femme">Femme</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Poids (kg) :</label>
+                <input type="number" id="poids" class="form-control" placeholder="Ex : 70">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Taille (cm) :</label>
+                <input type="number" id="taille" class="form-control" placeholder="Ex : 170">
+            </div>
+
+            <button onclick="calculerIMC()" class="btn btn-success w-100">Calculer</button>
+
+            <h2 id="resultat" class="text-center mt-4"></h2>
+
+         
+<ul id="historique" class="list-group"></ul>
+
+        </div>
+    </div>
+
+    <script>
+        function calculerIMC() {
+            let poids = document.getElementById("poids").value;
+            let taille = document.getElementById("taille").value / 100;
+            let sexe = document.getElementById("sexe").value;
+
+            if (poids && taille) {
+                let imc = (poids / (taille * taille)).toFixed(2);
+                let message;
+
+                if (sexe === "homme") {
+                    message = imc < 18.5 ? "Sous-poids" :
+                        imc < 25 ? "Poids normal" :
+                            imc < 30 ? "Surpoids" : "Obésité";
+                } else {
+                    message = imc < 18 ? "Sous-poids" :
+                        imc < 24 ? "Poids normal" :
+                            imc < 29 ? "Surpoids" : "Obésité";
+                }
+
+                document.getElementById("resultat").innerText = `Votre IMC est ${imc} - ${message}`;
+
+                // Ajouter un bouton vers la page conseils
+                document.getElementById("resultat").innerHTML += `
+            <br><a href="conseils.html?imc=${imc}" class="btn btn-info mt-3">Voir les conseils</a>
+        `;
+            } else {
+                document.getElementById("resultat").innerText = "Veuillez entrer toutes les valeurs.";
+            }
+        }
+
+    </script>
+</body>
+
+
+</body>
+
+</html>
